@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { FaShoppingCart, FaRegStar } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addToCart } from "../redux/cartSlice";
 
 
 
-function Card({ item, addToCart, addToFavorite }) {
+function Card({ item, addToFavorite }) {
+     const dispatch = useDispatch();
 
     const [count, setCount] = useState(1)
     function minus() {
@@ -26,7 +29,7 @@ function Card({ item, addToCart, addToFavorite }) {
                 <button className="counter-btn" onClick={plus}>+</button>
             </div>
             <div className="card-actions">
-                <button className="cart-btn" onClick={() => addToCart(item)}><FaShoppingCart /> Add to Cart</button>
+                <button className="cart-btn" onClick={() => dispatch(addToCart(item))}><FaShoppingCart /> Add to Cart</button>
                 <button className="favorite" onClick={() => addToFavorite(item)}><FaRegStar /> Favorite</button>
                 <Link to={`/detail/${item.id}`} className="detail-link">Detail</Link>
             </div>

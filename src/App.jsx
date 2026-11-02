@@ -12,35 +12,11 @@ import './App.css'
 import { AppContext } from './components/useContext.jsx'
 
 function App() {
-  const [cartItems, setCartItems] = useState([])
   const [sliderCart, setSliderCart] = useState(false)
 
   const [favoriteItems, setFavoriteItems] = useState([])
   const [favoriteSlider, setFavoriteSlider] = useState(false)
 
-  const [total, setTotal] = useState(0)
-
-  function addToCart(item) {
-    setCartItems(prevItems => {
-      const existe = prevItems.some(
-        produit => produit.id === item.id
-      );
-
-      if (existe) {
-        return prevItems.map(produit =>
-          produit.id === item.id
-            ? {
-              ...produit,
-              quantite: produit.quantite + 1
-            }
-            : produit
-        );
-      }
-
-      return [...prevItems, { ...item, quantite: 1 }];
-    });
-    setTotal(prevTotal => prevTotal + item.price);
-  }
 
   function vueSlideCart() {
     setSliderCart(!sliderCart)
@@ -65,25 +41,10 @@ function App() {
     setFavoriteSlider(!favoriteSlider)
   }
 
-  function plusQte(item) {
-    setCartItems(cartItems.map(produit => produit.id != item.id ? produit : { ...produit, "quantite": produit.quantite + 1 }))
-    setTotal(total + item.price)
-  }
-
-  function minusQte(item) {
-    setTotal(total - item.price)
-    if (item.quantite == 1) {
-      setCartItems(cartItems.filter(produit => produit != item))
-    } else {
-
-      setCartItems(cartItems.map(produit => produit.id == item.id ? { ...produit, "quantite": produit.quantite - 1 } : produit))
-    }
-  }
-
 
   return (
     <>
-      <AppContext.Provider value={{cartItems, favoriteItems, vueSlideCart, vueFavoriteSlider, addToFavorite, addToCart, total, plusQte, minusQte, }}>
+      <AppContext.Provider value={{favoriteItems, vueSlideCart, vueFavoriteSlider, addToFavorite}}>
         <BrowserRouter>
           <Header />
           <Routes>

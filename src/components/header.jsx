@@ -3,9 +3,12 @@ import logo from "../assets/Caps-Shop-Logo.png";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "./useContext";
+import { useSelector } from "react-redux";
 
 function Header() {
-    const {cartItems, favoriteItems, vueSlideCart, vueFavoriteSlider} = useContext(AppContext)
+    const {favoriteItems, vueSlideCart, vueFavoriteSlider} = useContext(AppContext)
+    const cartItems = useSelector(state => state.cart.cartItems);
+    
     const [user, setUser] = useState(null);
     useEffect(() => {
         async function getUser() {

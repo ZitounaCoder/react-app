@@ -1,10 +1,13 @@
-import { useContext } from 'react';
 import Cart from './cart'
-import { AppContext } from './useContext';
+import { useSelector, useDispatch } from 'react-redux'
+import { plusQte, minusQte } from '../redux/cartSlice'
 
 function DropCart() {
-    const {cartItems, total, plusQte, minusQte} = useContext(AppContext)
-    
+    const cartItems = useSelector(state => state.cart.cartItems)
+    const total = useSelector(state => state.cart.total)
+
+    const dispatch = useDispatch()
+
     return (
         <div className="cart-drop">
             <h2>Shopping Cart</h2>
@@ -15,8 +18,8 @@ function DropCart() {
             {cartItems.length > 0 ? (
                 cartItems.map((item, index) => (
                     <Cart
-                        plusQte={plusQte}
-                        minusQte={minusQte}
+                        plusQte={() => dispatch(plusQte(item))}
+                        minusQte={() => dispatch(minusQte(item))}
                         key={item.id ?? index}
                         item={item}
                     />
